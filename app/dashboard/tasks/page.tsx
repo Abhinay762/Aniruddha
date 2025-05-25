@@ -104,10 +104,12 @@ export default function TasksPage() {
           <h1 className="text-3xl font-bold text-gray-900">Tasks</h1>
           <p className="text-gray-600">Manage and track your tasks across all projects</p>
         </div>
-        <Button onClick={() => setShowCreateDialog(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          New Task
-        </Button>
+        {user?.role !== "user" && (
+          <Button onClick={() => setShowCreateDialog(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            New Task
+          </Button>
+        )}
       </div>
 
       {/* Filters */}
@@ -179,21 +181,26 @@ export default function TasksPage() {
         <Card>
           <CardContent className="text-center py-12">
             <p className="text-gray-500 mb-4">No tasks found</p>
-            <Button onClick={() => setShowCreateDialog(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              Create Your First Task
-            </Button>
+            {user?.role !== "user" && (
+              <Button onClick={() => setShowCreateDialog(true)}>
+                <Plus className="w-4 h-4 mr-2" />
+                Create Your First Task
+              </Button>
+            )}
           </CardContent>
         </Card>
       )}
 
-      <CreateTaskDialog
-        open={showCreateDialog}
-        onOpenChange={setShowCreateDialog}
-        onSuccess={fetchTasks}
-        projects={projects}
-        users={users}
-      />
+      {/* Create Task Dialog */}
+      {user?.role !== "user" && (
+        <CreateTaskDialog
+          open={showCreateDialog}
+          onOpenChange={setShowCreateDialog}
+          onSuccess={fetchTasks}
+          projects={projects}
+          users={users}
+        />
+      )}
 
       {selectedTask && (
         <TaskDetailDialog

@@ -33,6 +33,23 @@ export function ProjectCard({ project, stats, onUpdate }: ProjectCardProps) {
     }
   }
 
+  const handleDelete = async () => {
+    if (confirm(`Are you sure you want to delete project "${project.name}"?`)) {
+      const res = await fetch(`/api/project/${project._id}`, {
+        method: "DELETE",
+      })
+      if (res.ok) {
+        onUpdate()
+      } else {
+        alert("Failed to delete project")
+      }
+    }
+  }
+
+  const handleEdit = () => {
+    alert("Edit functionality coming soon.")
+  }
+
   return (
     <Card className="hover:shadow-lg transition-shadow">
       <CardHeader className="pb-3">
@@ -49,13 +66,15 @@ export function ProjectCard({ project, stats, onUpdate }: ProjectCardProps) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>Edit Project</DropdownMenuItem>
-                <DropdownMenuItem className="text-red-600">Delete Project</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleEdit}>Edit Project</DropdownMenuItem>
+                <DropdownMenuItem className="text-red-600" onClick={handleDelete}>
+                  Delete Project
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}
         </div>
-        <Badge variant={getStatusColor(project.status)} className="w-fit">
+        <Badge variant={getStatusColor(project.status)} className="w-fit capitalize">
           {project.status}
         </Badge>
       </CardHeader>

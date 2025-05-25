@@ -62,12 +62,12 @@ export default function ProjectsPage() {
           <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
           <p className="text-gray-600">Manage and track your projects</p>
         </div>
-        {(user?.role === "admin" || user?.role === "user") && (
-          <Button onClick={() => setShowCreateDialog(true)}>
-            <Plus className="w-4 h-4 mr-2" />
-            New Project
-          </Button>
-        )}
+        {user?.role === "admin" && (
+  <Button onClick={() => setShowCreateDialog(true)}>
+    <Plus className="mr-2 h-4 w-4" /> New Project
+  </Button>
+)}
+
       </div>
 
       {/* Filters */}

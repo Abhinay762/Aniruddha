@@ -9,6 +9,7 @@ export interface User {
 }
 
 export interface Project {
+  [x: string]: string
   _id?: string
   name: string
   description: string
